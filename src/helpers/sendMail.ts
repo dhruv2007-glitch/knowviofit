@@ -3,41 +3,34 @@ import logger from "../utils/logger";
 import { MailTemplate } from "./OtpMailTemplate";
 import nodemailer from "nodemailer";
 
-type mailType = "OTP" | "RESETPASSWORD" | "FORGOTPASSWORD" | "CHANGEEMAILID";
-
 export const sendMail = async (
 	name: string,
 	mailId: string,
-	type: mailType,
-    verificationLink: string,
-	otp?: number,
+	verificationLink: string,
 ) => {
 	try {
 		const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: conf.mailId,
-                pass: conf.mailPass,
-            },
-        });
+			service: "gmail",
+			auth: {
+				user: conf.mailId,
+				pass: conf.mailPass,
+			},
+		});
 
-		if (type === "OTP") {
-			const template = MailTemplate(name, otp, verificationLink);
-			const info = await transporter.sendMail({
-                from: `"KNOWVIOFIT" <${conf.mailId}>`,
-                to: mailId,
-                subject: "OTP Verification - KNOWVIOFIT",
-                text: `Hi ${name}, your OTP is ${otp}. It's valid for 3 minutes.`,
-                html: template,
-            });
-            console.log('mail sent', info)
-            return info
-		}
-
+		const template = MailTemplate(name, verificationLink);
+		const info = await transporter.sendMail({
+			from: `"KNOWVIOFIT" <${conf.mailId}>`,
+			to: mailId,
+			subject: "OTP Verification - KNOWVIOFIT",
+			text: `Hi ${name}, your Verificatin link is here. It's valid for 3 minutes.`,
+			html: template,
+		});
+		console.log("mail sent", info);
+		return info;
 	} catch (error: unknown) {
 		const err = error as Error;
 		logger.error(err.message);
 	}
 };
 
-sendMail("dhruv", "dhruvs19125@gmail.com", "OTP",'kdsflsd', 9999 );
+sendMail("dhruv", "dhruvs19125@gmail.com", " kdsflsd");

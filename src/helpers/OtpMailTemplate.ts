@@ -1,6 +1,5 @@
 export const MailTemplate = (
   name: string,
-  otp: number | undefined,
   verificationLink: string
 ): string => {
   return `
@@ -74,10 +73,9 @@ export const MailTemplate = (
       </div>
       <div class="content">
         <p>Dear ${name},</p>
-        <p>We received a sign-in request for your KNOWVIOFIT account. Your One-Time Password (OTP) is:</p>
-        <div class="otp">${otp}</div>
-        <p>This OTP is valid for 3 minutes. If you did not initiate this request, please disregard this email.</p>
-        <p>Alternatively, you can verify your account by clicking the link below:</p>
+        <p>We received a sign-Up request for your KNOWVIOFIT account. Please verify your email:</p>
+        <p>This Verification is valid for 3 minutes. If you did not initiate this request, please disregard this email.</p>
+        <p>Verify your account by clicking the link below:</p>
         <p style="text-align:center;">
           <a class="btn" href="${verificationLink}">Verify Your Account</a>
         </p>

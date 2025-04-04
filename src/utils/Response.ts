@@ -1,20 +1,22 @@
+import type { ZodError } from "zod";
+
 export type ApiResponse<T> = {
 	status: "success" | "error";
 	message: string;
 	data?: T;
-	error?: string | null;
+	error?: string | ReturnType<ZodError["flatten"]> | null;
 };
 
 export const successResponse = <T>(
 	message: string,
 	data?: T,
-): ApiResponse<T> => {
+): ApiResponse<any> => {
 	return { status: "success", message, data };
 };
 
 export const errorResponse = (
 	message: string,
-	error?: string,
+	error?: string | ReturnType<ZodError["flatten"]>,
 ): ApiResponse<null> => {
 	return { status: "error", message, error: error || null };
 };

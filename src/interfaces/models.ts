@@ -4,9 +4,11 @@ export interface IUser extends Document {
 	name: string;
 	email: string;
 	password: string;
-	otp: number;
+	verificationToken: string;
 	isVerified: boolean;
 	verificationId: number | string;
+	otpExpire: Date;
+	verifyPassword: (password: string) => Promise<boolean>
 }
 
 export interface IProfile extends Document {

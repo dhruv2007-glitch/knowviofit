@@ -8,6 +8,9 @@ export const conf = {
 	dbName: "knowvioFit",
 	extraDbUri: "?retryWrites=true&w=majority",
 	cookierSecret: process.env.COOKIE_SECRET,
-	mailId: process.env.MAIL_ID,
-	mailPass: process.env.MAIL_PASS,
+	mailId: String(process.env.MAIL_ID),
+	mailPass: String(process.env.MAIL_PASS),
+	backendUrl: String(process.env.BACKEND_URI),
+	verificationSecret: String(process.env.VERIFY_SECRET),
+	accessTokenSecret: String(process.env.ACCESS_SECRET),
 };
