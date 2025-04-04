@@ -1,7 +1,6 @@
 import type {
 	NextFunction,
 	Request,
-	RequestParamHandler,
 	Response,
 } from "express";
 import jwt from "jsonwebtoken";

@@ -139,7 +139,7 @@ const login = asyncHandler(async (req: Request, res: Response) => {
 		return res.status(404).json(errorResponse("User not found"));
 	}
 	if (!user.isVerified) {
-		return res.status(400).json(errorResponse("User are not found"));
+		return res.status(400).json(errorResponse("User is not valid"));
 	}
 	const isPasswordValidate = await user.verifyPassword(password);
 

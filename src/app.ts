@@ -28,7 +28,7 @@ app.use(morganMiddleware);
 // app.use(xss());
 
 // Routes
-app.use('/api/user/v1', userRoute)
+app.use('/api/v1/user', userRoute)
 // app.use('/')
 // default server routes
 app.get("/healthCheck", healthCheck);
