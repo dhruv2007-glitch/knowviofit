@@ -32,7 +32,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 	const payload = {
 		email,
 	};
-	const verificationToken = await jwt.sign({ email }, conf.verificationSecret);
+	const verificationToken = await jwt.sign(payload, conf.verificationSecret);
 
 	const verificationId = nanoid(7);
 
@@ -56,7 +56,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 		const sendEmail = await sendMail(
 			name,
 			email,
-			`${conf.backendUrl}/api/v1/user/verify/${verificationId}`,
+			`${conf.backendUrl}/api/v1/user/verifyemail/${verificationId}`,
 		);
 		if (sendEmail?.rejected.length) {
 			return res.status(500).json(new AppError("Email id is not valid", 400));
@@ -64,7 +64,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
 		return res
 			.status(201)
-			.cookie("verificationId", verificationId)
+			.cookie("verificationToken", verificationToken)
 			.json(
 				successResponse(
 					"User created successfully please check your email or spam box to verify",
@@ -87,7 +87,7 @@ const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 			);
 	}
 
-	const { id } = result.data;
+	const verificationId = result.data.id;
 	const verificationToken = req.cookies?.verificationToken;
 
 	if (!verificationToken) {
@@ -103,7 +103,7 @@ const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 
 	const { email } = decodedToken as { email: string };
 
-	const user = await User.findOne({ email });
+	const user = await User.findOne({ email, verificationId });
 
 	if (!user) {
 		return res.status(404).json(errorResponse("User not found"));
@@ -157,12 +157,19 @@ const login = asyncHandler(async (req: Request, res: Response) => {
 		secure: true,
 		maxAge: 24 * 60 * 60 * 1000,
 	};
-	const accessToken = await jwt.sign(payload, conf.accessTokenSecret );
+	const accessToken = await jwt.sign(payload, conf.accessTokenSecret);
 
 	res
 		.status(200)
-		.cookie("accessToken", accessToken)
+		.cookie("accessToken", accessToken, options)
 		.json(successResponse("user successfully logged in"));
 });
 
-export { registerUser, verifyEmail, login };
+const logout = asyncHandler(async (req: Request, res: Response) => {
+	res
+		.status(200)
+		.clearCookie("accessToken")
+		.json(successResponse("User logged out successfully"));
+});
+
+export { registerUser, verifyEmail, login, logout };

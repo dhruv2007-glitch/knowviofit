@@ -7,6 +7,7 @@ import rateLimit from "express-rate-limit";
 import morganMiddleware from "./middleware/morganMiddleware";
 // import xss from "xss-clean";
 import { healthCheck, hello, notFound } from "./controllers/server.controller";
+import userRoute from "./routes/user.route"
 
 const app = express();
 
@@ -27,7 +28,8 @@ app.use(morganMiddleware);
 // app.use(xss());
 
 // Routes
-
+app.use('/api/user/v1', userRoute)
+// app.use('/')
 // default server routes
 app.get("/healthCheck", healthCheck);
 app.get("/", hello);

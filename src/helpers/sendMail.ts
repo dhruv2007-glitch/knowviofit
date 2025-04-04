@@ -33,4 +33,3 @@ export const sendMail = async (
 	}
 };
 
-sendMail("dhruv", "dhruvs19125@gmail.com", " kdsflsd");
