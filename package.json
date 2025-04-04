@@ -14,6 +14,7 @@
 	"author": "Dhruv Sharma",
 	"license": "ISC",
 	"dependencies": {
+		"@types/nodemailer": "^6.4.17",
 		"argon2": "^0.41.1",
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
@@ -26,6 +27,8 @@
 		"mongoose": "^8.13.1",
 		"morgan": "^1.10.0",
 		"node-cache": "^5.1.2",
+		"nodemailer": "^6.10.0",
+		"otp-generator": "^4.0.1",
 		"winston": "^3.17.0",
 		"xss-clean": "^0.1.4"
 	},

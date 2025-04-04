@@ -15,7 +15,7 @@
 		"strictPropertyInitialization": true,
 		"noImplicitThis": true,
 		"alwaysStrict": true,
-		"exactOptionalPropertyTypes": false,
+		"exactOptionalPropertyTypes": true,
 
 		"typeRoots": ["./types", "./node_modules/@types"]
 	}

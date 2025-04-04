@@ -1,5 +1,8 @@
-import { app } from "./app.js";
-import { conf } from "./config/conf.js";
+import { app } from "./app";
+import { conf } from "./config/conf";
+import logger from "./utils/logger";
 
-
-app.listen(conf.port, ()=> console.log("hello server PORT", conf.port))
+app.listen(conf.port, () => {
+	logger.info(`Server is listening on port ${conf.port}`);
+    console.log("Server started")
+});

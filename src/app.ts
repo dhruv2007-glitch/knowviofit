@@ -5,7 +5,7 @@ import helmet from "helmet";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 import morganMiddleware from "./middleware/morganMiddleware";
-import xss from "xss-clean";
+// import xss from "xss-clean";
 import { healthCheck, hello, notFound } from "./controllers/server.controller";
 
 const app = express();
@@ -24,13 +24,13 @@ app.use(hpp());
 app.use(express.json({ limit: "10kb" }));
 app.use("/api", limiter);
 app.use(morganMiddleware);
-app.use(xss());
+// app.use(xss());
 
 // Routes
 
 // default server routes
-app.use(notFound);
 app.get("/healthCheck", healthCheck);
 app.get("/", hello);
+app.use(notFound);
 
 export { app };

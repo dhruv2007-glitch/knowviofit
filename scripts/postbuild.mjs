@@ -7,10 +7,10 @@ async function fixImports() {
   
   for (const file of files) {
     let content = readFileSync(file, 'utf8');
-    // Updated regex to target only relative paths
+    // Updated regex to handle dots in filenames and preserve quotes
     content = content.replace(
-      /from\s+['"](\.{1,2}\/[\w-/]+)(?<!\.js)['"]/g,
-      'from "$1.js"'
+      /from\s+(['"])(\.{1,2}\/[\w-./]+)(?<!\.js)\1/g,
+      'from $1$2.js$1'
     );
     writeFileSync(file, content);
   }

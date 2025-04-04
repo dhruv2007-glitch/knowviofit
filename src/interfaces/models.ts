@@ -4,6 +4,9 @@ export interface IUser extends Document {
 	name: string;
 	email: string;
 	password: string;
+	otp: number;
+	isVerified: boolean;
+	verificationId: number | string;
 }
 
 export interface IProfile extends Document {
