@@ -8,7 +8,7 @@
 		"devts": "tsx src/server.ts",
 		"build": "tsc && node scripts/postbuild.mjs",
 		"start": "node dist/server.js",
-		"devjs": "tsc && node dist/index.js"
+		"devjs": "tsc && node scripts/postbuild.mjs && node dist/server.js"
 	},
 	"keywords": ["knwovioFit", "fitness-tracking-app"],
 	"author": "Dhruv Sharma",

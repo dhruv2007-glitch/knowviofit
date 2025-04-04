@@ -1,4 +1,3 @@
-import type { NextFunction, Request, Response } from "express";
 import express from "express";
 import cookieParser from "cookie-parser";
 import { conf } from "./config/conf";
@@ -7,6 +6,7 @@ import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 import morganMiddleware from "./middleware/morganMiddleware";
 import xss from "xss-clean";
+import { healthCheck, hello, notFound } from "./controllers/server.controller";
 
 const app = express();
 
@@ -28,13 +28,9 @@ app.use(xss());
 
 // Routes
 
-// 404 route
-app.use((req: Request, res: Response, next: NextFunction): void => {
-	res.status(404).json({
-		status: "fail",
-		message: "Route not found",
-	});
-});
-
+// default server routes
+app.use(notFound);
+app.get("/healthCheck", healthCheck);
+app.get("/", hello);
 
 export { app };
