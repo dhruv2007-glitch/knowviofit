@@ -16,7 +16,7 @@ export interface IProfile extends Document {
 	age?: number;
 	weight?: number;
 	height?: number;
-	fitnessGoals?: string;
+	fitnessGoal?: string;
 }
 
 export interface IActivity extends Document {
@@ -28,6 +28,7 @@ export interface IActivity extends Document {
 	reps?: number;
 	sets?: number;
 	intensity?: "Low" | "Medium" | "High";
+	time: number; // in minutes
 }
 
 export interface IAiInsights extends Document {
@@ -70,4 +71,19 @@ export enum EActivityType {
 	Pilates = "PILATES",
 	CrossFit = "CROSSFIT",
 	Zumba = "ZUMBA",
+}
+
+export enum EActivityTypeMET {
+	RUNNING = 9.8,
+	CYCLING = 7.5,
+	WEIGHTLIFTING = 6.0,
+	SWIMMING = 8.0,
+	WALKING = 3.5,
+	YOGA = 2.5,
+	HIKING = 6.0,
+	ROWING = 7.0,
+	ELLIPTICAL = 5.0,
+	PILATES = 3.0,
+	CROSSFIT = 8.0,
+	ZUMBA = 6.5,
 }

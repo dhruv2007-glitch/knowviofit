@@ -10,4 +10,3 @@ if (isDBConnected) {
         console.log("Server started");
     });
 }
-const hi = "dd";

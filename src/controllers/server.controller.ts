@@ -2,11 +2,12 @@ import type { Request, Response, NextFunction } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import { successResponse } from "../utils/Response";
 
-export const healthCheck = asyncHandler(
-	async (req: Request, res: Response): Promise<void> => {
-		res.status(200).json(successResponse("Health check done"));
-	},
-);
+export const healthCheck = async (
+	req: Request,
+	res: Response,
+): Promise<void> => {
+	res.status(200).json(successResponse("Health check done"));
+};
 
 export const notFound = (
 	req: Request,
@@ -19,8 +20,6 @@ export const notFound = (
 	});
 };
 
-export const hello = asyncHandler(
-	async (req: Request, res: Response): Promise<void> => {
-		res.status(200).json(successResponse("Hi there :-)"));
-	},
-);
+export const hello = async (req: Request, res: Response): Promise<void> => {
+	res.status(200).json(successResponse("Hi there :-)"));
+};

@@ -1,12 +1,10 @@
-import type { Request, Response, NextFunction } from "express";
-
-type TAsyncHandler = (
-	req: Request,
-	res: Response,
-	next?: NextFunction,
-) => Promise<Response<any> | void>;
+import type { RequestHandler, Request, Response, NextFunction } from "express";
 
 export const asyncHandler =
-	(fn: TAsyncHandler) => (req: Request, res: Response, next: NextFunction) => {
+	(
+		fn: (req: Request, res: Response, next: NextFunction) => Promise<any>,
+	): RequestHandler =>
+	(req, res, next) => {
 		Promise.resolve(fn(req, res, next)).catch(next);
+		return; // Explicitly return void
 	};

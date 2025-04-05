@@ -22,3 +22,18 @@ export var EActivityType;
     EActivityType["CrossFit"] = "CROSSFIT";
     EActivityType["Zumba"] = "ZUMBA";
 })(EActivityType || (EActivityType = {}));
+export var EActivityTypeMET;
+(function (EActivityTypeMET) {
+    EActivityTypeMET[EActivityTypeMET["RUNNING"] = 9.8] = "RUNNING";
+    EActivityTypeMET[EActivityTypeMET["CYCLING"] = 7.5] = "CYCLING";
+    EActivityTypeMET[EActivityTypeMET["WEIGHTLIFTING"] = 6] = "WEIGHTLIFTING";
+    EActivityTypeMET[EActivityTypeMET["SWIMMING"] = 8] = "SWIMMING";
+    EActivityTypeMET[EActivityTypeMET["WALKING"] = 3.5] = "WALKING";
+    EActivityTypeMET[EActivityTypeMET["YOGA"] = 2.5] = "YOGA";
+    EActivityTypeMET[EActivityTypeMET["HIKING"] = 6] = "HIKING";
+    EActivityTypeMET[EActivityTypeMET["ROWING"] = 7] = "ROWING";
+    EActivityTypeMET[EActivityTypeMET["ELLIPTICAL"] = 5] = "ELLIPTICAL";
+    EActivityTypeMET[EActivityTypeMET["PILATES"] = 3] = "PILATES";
+    EActivityTypeMET[EActivityTypeMET["CROSSFIT"] = 8] = "CROSSFIT";
+    EActivityTypeMET[EActivityTypeMET["ZUMBA"] = 6.5] = "ZUMBA";
+})(EActivityTypeMET || (EActivityTypeMET = {}));

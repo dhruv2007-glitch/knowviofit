@@ -12,7 +12,7 @@ import type { IUser } from "../interfaces/models";
 import type { JwtPayload } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
 
-const registerUser = asyncHandler(async (req: Request, res: Response) => {
+const registerUser = async (req: Request, res: Response) => {
 	const result = signUpSchema.safeParse(req.body);
 	if (!result.success) {
 		return res
@@ -75,19 +75,19 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 		logger.error(error.message);
 		return res.status(400).json(new AppError(error.message, 500));
 	}
-});
+};
 
-const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
+const verifyEmail = async (req: Request, res: Response) => {
 	const result = verificationShema.safeParse(req.params);
 	if (!result.success) {
-		return res
+		res
 			.status(400)
 			.json(
 				errorResponse("Please provide correct field", result.error.flatten()),
 			);
 	}
 
-	const verificationId = result.data.id;
+	const verificationId = result?.data?.id;
 	const verificationToken = req.cookies?.verificationToken;
 
 	if (!verificationToken) {
@@ -120,9 +120,9 @@ const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 		.status(200)
 		.clearCookie("verificationToken")
 		.json(successResponse("Email verified successfully"));
-});
+};
 
-const login = asyncHandler(async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
 	const result = loginSchema.safeParse(req.body);
 	if (!result.success) {
 		return res
@@ -163,16 +163,16 @@ const login = asyncHandler(async (req: Request, res: Response) => {
 		.status(200)
 		.cookie("accessToken", accessToken, options)
 		.json(successResponse("user successfully logged in"));
-});
+};
 
-const logout = asyncHandler(async (req: Request, res: Response) => {
+const logout = async (req: Request, res: Response): Promise<void> => {
 	res
 		.status(200)
 		.clearCookie("accessToken")
 		.json(successResponse("User logged out successfully"));
-});
+};
 
-const deleteAccount = asyncHandler(async (req: Request, res: Response) => {
+const deleteAccount = async (req: Request, res: Response) => {
 	const email = req.user.email;
 
 	const user = await User.findOneAndDelete({ email });
@@ -184,7 +184,10 @@ const deleteAccount = asyncHandler(async (req: Request, res: Response) => {
 			.json(successResponse("User logged out successfully"));
 	}
 
-	return res.status(200).clearCookie("accessToken").json(successResponse("User deleted successfully"))
-});
+	return res
+		.status(200)
+		.clearCookie("accessToken")
+		.json(successResponse("User deleted successfully"));
+};
 
 export { registerUser, verifyEmail, login, logout, deleteAccount };

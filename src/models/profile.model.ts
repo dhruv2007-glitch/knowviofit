@@ -26,7 +26,7 @@ const profileSchema = new Schema<IProfile>({
 		min: 1,
 		max: 200,
 	},
-	fitnessGoals: {
+	fitnessGoal: {
 		type: String,
 	},
 });

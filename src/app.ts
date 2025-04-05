@@ -25,7 +25,7 @@ app.use(hpp());
 app.use(express.json({ limit: "10kb" }));
 app.use("/api", limiter);
 app.use(morganMiddleware);
-// app.use(xss());
+// app.use(xss());          
 
 // Routes
 app.use('/api/v1/user', userRoute)

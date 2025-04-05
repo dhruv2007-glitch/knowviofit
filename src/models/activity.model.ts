@@ -18,10 +18,10 @@ const activitySchema = new Schema<IActivity>(
 			type: Number,
 			required: true,
 		},
-		distance: {
+		distance: {                 // in meters
 			type: Number,
 		},
-		weightUsed: {
+		weightUsed: {              // in kgs
 			type: Number,
 		},
 		reps: {
@@ -30,10 +30,10 @@ const activitySchema = new Schema<IActivity>(
 		sets: {
 			type: Number,
 		},
-		intensity: {
-			type: String,
-			enum: ["Low", "Medium", "High"],
-		},
+		time: {
+			type: Number,    // intensity
+			required: true,
+		}
 	},
 	{ timestamps: true },
 );

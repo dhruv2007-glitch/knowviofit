@@ -8,7 +8,6 @@
 		"skipLibCheck": true,
 		"moduleResolution": "node10",
 		"strict": true,
-		"noImplicitAny": false,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,

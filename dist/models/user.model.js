@@ -39,5 +39,5 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.verifyPassword = async function (password) {
     return await argon2.verify(this.password, password);
 };
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 export { User };

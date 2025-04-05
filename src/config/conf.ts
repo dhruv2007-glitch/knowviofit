@@ -7,7 +7,7 @@ export const conf = {
 	clientUrl: String(process.env.CLIENT_URL),
 	dbName: "knowvioFit",
 	extraDbUri: "?retryWrites=true&w=majority",
-	cookierSecret: process.env.COOKIE_SECRET,
+	cookierSecret: String(process.env.COOKIE_SECRET),
 	mailId: String(process.env.MAIL_ID),
 	mailPass: String(process.env.MAIL_PASS),
 	backendUrl: String(process.env.BACKEND_URI),

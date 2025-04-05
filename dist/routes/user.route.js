@@ -1,9 +1,23 @@
-import { registerUser, verifyEmail, login, logout, } from "../controllers/user.controller.js";
+import { registerUser, verifyEmail, login, logout, deleteAccount, } from "../controllers/user.controller.js";
+import { createProfile, editProfile, getProfile, } from "../controllers/profile.controller.js";
 import express from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
+import { createGoal } from "../controllers/goal.controller.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { createActivity } from "../controllers/acivity.controller.js";
 const router = express.Router();
-router.get("/verifyemail/:id", verifyEmail);
-router.post("/register", registerUser);
-router.post("/login", login);
-router.get("/logout", authMiddleware, logout);
+// Auth Routes
+router.get("/verifyemail/:id", asyncHandler(verifyEmail));
+router.post("/register", asyncHandler(registerUser));
+router.post("/login", asyncHandler(login));
+router.get("/logout", authMiddleware, asyncHandler(logout));
+router.get("/deleteuser", authMiddleware, asyncHandler(deleteAccount));
+// Profile Routes
+router.post("/createprofile", authMiddleware, asyncHandler(createProfile));
+router.post("/editProfile", authMiddleware, asyncHandler(editProfile));
+router.get("/getProfile", authMiddleware, asyncHandler(getProfile));
+// Goal Routes
+router.post("/createGoal", authMiddleware, asyncHandler(createGoal));
+// Activity Routes
+router.post("/createActivity", authMiddleware, asyncHandler(createActivity));
 export default router;

@@ -1,6 +1,5 @@
 import { User } from "../models/user.model.js";
 import { loginSchema, signUpSchema, verificationShema } from "../schemas/auth.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
 import { errorResponse, successResponse } from "../utils/Response.js";
 import { AppError } from "../utils/ApiError.js";
 import { nanoid } from "nanoid";
@@ -8,7 +7,7 @@ import { sendMail } from "../helpers/sendMail.js";
 import { conf } from "../config/conf.js";
 import logger from "../utils/logger.js";
 import jwt from "jsonwebtoken";
-const registerUser = asyncHandler(async (req, res) => {
+const registerUser = async (req, res) => {
     const result = signUpSchema.safeParse(req.body);
     if (!result.success) {
         return res
@@ -55,15 +54,15 @@ const registerUser = asyncHandler(async (req, res) => {
         logger.error(error.message);
         return res.status(400).json(new AppError(error.message, 500));
     }
-});
-const verifyEmail = asyncHandler(async (req, res) => {
+};
+const verifyEmail = async (req, res) => {
     const result = verificationShema.safeParse(req.params);
     if (!result.success) {
-        return res
+        res
             .status(400)
             .json(errorResponse("Please provide correct field", result.error.flatten()));
     }
-    const verificationId = result.data.id;
+    const verificationId = result?.data?.id;
     const verificationToken = req.cookies?.verificationToken;
     if (!verificationToken) {
         return res.status(400).json(errorResponse("Verification token is missing"));
@@ -89,8 +88,8 @@ const verifyEmail = asyncHandler(async (req, res) => {
         .status(200)
         .clearCookie("verificationToken")
         .json(successResponse("Email verified successfully"));
-});
-const login = asyncHandler(async (req, res) => {
+};
+const login = async (req, res) => {
     const result = loginSchema.safeParse(req.body);
     if (!result.success) {
         return res
@@ -124,11 +123,25 @@ const login = asyncHandler(async (req, res) => {
         .status(200)
         .cookie("accessToken", accessToken, options)
         .json(successResponse("user successfully logged in"));
-});
-const logout = asyncHandler(async (req, res) => {
+};
+const logout = async (req, res) => {
     res
         .status(200)
         .clearCookie("accessToken")
         .json(successResponse("User logged out successfully"));
-});
-export { registerUser, verifyEmail, login, logout };
+};
+const deleteAccount = async (req, res) => {
+    const email = req.user.email;
+    const user = await User.findOneAndDelete({ email });
+    if (!user) {
+        return res
+            .status(200)
+            .clearCookie("accessToken")
+            .json(successResponse("User logged out successfully"));
+    }
+    return res
+        .status(200)
+        .clearCookie("accessToken")
+        .json(successResponse("User deleted successfully"));
+};
+export { registerUser, verifyEmail, login, logout, deleteAccount };
