@@ -172,4 +172,19 @@ const logout = asyncHandler(async (req: Request, res: Response) => {
 		.json(successResponse("User logged out successfully"));
 });
 
-export { registerUser, verifyEmail, login, logout };
+const deleteAccount = asyncHandler(async (req: Request, res: Response) => {
+	const email = req.user.email;
+
+	const user = await User.findOneAndDelete({ email });
+
+	if (!user) {
+		return res
+			.status(200)
+			.clearCookie("accessToken")
+			.json(successResponse("User logged out successfully"));
+	}
+
+	return res.status(200).json(successResponse("User deleted successfully"))
+});
+
+export { registerUser, verifyEmail, login, logout, deleteAccount };
