@@ -3,6 +3,7 @@ import { errorResponse, successResponse } from "../utils/Response.js";
 import { activitySchema } from "../schemas/activity.js";
 import { calculateBurnedCalories } from "../helpers/algorithms.js";
 import { Profile } from "../models/profile.model.js";
+import { getCache, setCache } from "../cache/cache.js";
 const createActivity = async (req, res) => {
     const result = activitySchema.safeParse(req.body);
     if (!result.success) {
@@ -41,4 +42,37 @@ const createActivity = async (req, res) => {
             .json(errorResponse("Error creating activity", err.message));
     }
 };
-export { createActivity };
+const getActivities = async (req, res) => {
+    const page = Number.parseInt(req.query.page) || 1;
+    const limit = Number.parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const userId = req.user._id;
+    const cacheKey = `activities_${userId}_${page}_${limit}`;
+    const cachedActivities = String(getCache(cacheKey));
+    if (cachedActivities) {
+        return res
+            .status(200)
+            .json(successResponse("Activities fetched from cache", JSON.parse(cachedActivities)));
+    }
+    const activities = await Activity.find({ userId })
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 });
+    if (!activities) {
+        return res
+            .status(404)
+            .json(errorResponse("No activities found for this user"));
+    }
+    const totalActivities = await Activity.countDocuments({ userId });
+    const totalPages = Math.ceil(totalActivities / limit);
+    const response = {
+        activities,
+        page,
+        limit,
+        totalPages,
+        totalActivities,
+    };
+    setCache(cacheKey, JSON.stringify(response));
+    return res.status(200).json(successResponse("Activities fetched", response));
+};
+export { createActivity, getActivities };

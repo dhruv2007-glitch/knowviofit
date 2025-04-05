@@ -2,9 +2,10 @@ import { registerUser, verifyEmail, login, logout, deleteAccount, } from "../con
 import { createProfile, editProfile, getProfile, } from "../controllers/profile.controller.js";
 import express from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
-import { createGoal } from "../controllers/goal.controller.js";
+import { createGoal, getGoal, completeGoal } from "../controllers/goal.controller.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { createActivity } from "../controllers/acivity.controller.js";
+import { createActivity, getActivities, } from "../controllers/acivity.controller.js";
+import { getAiInsights } from "../controllers/aiInsights.controller.js";
 const router = express.Router();
 // Auth Routes
 router.get("/verifyemail/:id", asyncHandler(verifyEmail));
@@ -18,6 +19,11 @@ router.post("/editProfile", authMiddleware, asyncHandler(editProfile));
 router.get("/getProfile", authMiddleware, asyncHandler(getProfile));
 // Goal Routes
 router.post("/createGoal", authMiddleware, asyncHandler(createGoal));
+router.get("/getGoal", authMiddleware, asyncHandler(getGoal));
+router.post("/completeGoal/:goalId", authMiddleware, asyncHandler(completeGoal));
 // Activity Routes
 router.post("/createActivity", authMiddleware, asyncHandler(createActivity));
+router.get("/get-activities", authMiddleware, asyncHandler(getActivities));
+// Ai Insights Routes
+router.get("/get-ai-insights", authMiddleware, asyncHandler(getAiInsights));
 export default router;

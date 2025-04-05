@@ -21,7 +21,7 @@ const profileSchema = new Schema<IProfile>({
 		max: 200,
 	},
 	height: {
-		ype: Number,
+		type: Number,
 		required: [true, "height required"],
 		min: 1,
 		max: 200,

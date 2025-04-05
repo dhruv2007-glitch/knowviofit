@@ -18,7 +18,7 @@ const profileSchema = new Schema({
         max: 200,
     },
     height: {
-        ype: Number,
+        type: Number,
         required: [true, "height required"],
         min: 1,
         max: 200,

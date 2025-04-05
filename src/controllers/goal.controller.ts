@@ -41,11 +41,21 @@ const getGoal = async (req: Request, res: Response) => {
 		.json(successResponse("Goals fetched successfully", goal));
 };
 
-const isGoalCompleted = async (req: Request, res: Response) => {
+const completeGoal = async (req: Request, res: Response) => {
 	const userId = req.user._id;
 	const { goalId } = req.params;
 
 	const goal = await Goal.findOne({ userId, _id: goalId });
+	if(!goal) {
+		return res
+			.status(404)
+			.json(errorResponse("Goal not found"));
+	}
+	goal.completed = true;
+	await goal.save();
+	return res
+		.status(200)
+		.json(successResponse("Goal completed successfully", goal));
 };
 
-export { createGoal, getGoal };
+export { createGoal, getGoal, completeGoal };
