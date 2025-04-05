@@ -27,10 +27,6 @@ const userSchema = new Schema<IUser>(
 		verificationId: {
 			type: String,
 		},
-		otpExpire: {
-			type: Date,
-			default: Date.now,
-		},
 		password: {
 			type: String,
 			minlength: 2,
