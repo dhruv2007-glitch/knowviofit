@@ -49,7 +49,6 @@ userSchema.methods.verifyPassword = async function (
 	return await argon2.verify(this.password, password);
 };
 
-const User: Model<IUser> =
-	mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+const User = mongoose.model<IUser>("User", userSchema);
 
 export { User };

@@ -35,7 +35,6 @@ export interface IAiInsights extends Document {
 	workOutSuggestion: string;
 	progressiveAnalysis: string;
 	motivationalMessage: string;
-	timestamp: Date;
 }
 
 export interface IGoal extends Document {
