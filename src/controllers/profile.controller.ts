@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import { editProfileSchema, profileSchema } from "../schemas/profile";
-import { asyncHandler } from "../utils/asyncHandler";
 import { errorResponse, successResponse } from "../utils/Response";
 import { Profile } from "../models/profile.model";
 import { AppError } from "../utils/ApiError";

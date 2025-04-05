@@ -10,7 +10,7 @@ export type ApiResponse<T> = {
 export const successResponse = <T>(
 	message: string,
 	data?: T,
-): ApiResponse<any> => {
+): ApiResponse<unknown> => {
 	return { status: "success", message, data };
 };
 

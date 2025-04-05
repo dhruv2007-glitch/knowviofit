@@ -18,6 +18,7 @@ import {
 	createActivity,
 	getActivities,
 } from "../controllers/acivity.controller";
+import { getAiInsights } from "../controllers/aiInsights.controller";
 
 const router = express.Router();
 
@@ -39,6 +40,9 @@ router.post("/createGoal", authMiddleware, asyncHandler(createGoal));
 
 // Activity Routes
 router.post("/createActivity", authMiddleware, asyncHandler(createActivity));
-router.get("/getActivities", authMiddleware, asyncHandler(getActivities));
+router.get("/get-activities", authMiddleware, asyncHandler(getActivities));
+// Ai Insights Routes
+
+router.get("/get-ai-insights", authMiddleware, asyncHandler(getAiInsights));
 
 export default router;

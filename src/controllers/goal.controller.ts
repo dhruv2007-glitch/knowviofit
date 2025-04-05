@@ -1,10 +1,6 @@
 import Goal from "../models/goal.model";
-
 import type { Request, Response } from "express";
-import { asyncHandler } from "../utils/asyncHandler";
 import { errorResponse, successResponse } from "../utils/Response";
-import { AppError } from "../utils/ApiError";
-import { EGoalType } from "../interfaces/models";
 import { goalSchema } from "../schemas/goal";
 
 const createGoal = async (req: Request, res: Response) => {
@@ -29,6 +25,27 @@ const createGoal = async (req: Request, res: Response) => {
 		description,
 	});
 	return res.status(201).json(successResponse("Goal created", goal));
-}
+};
+const getGoal = async (req: Request, res: Response) => {
+	const userId = req.user._id;
 
-export { createGoal };
+	const goal = await Goal.findOne({ userId });
+	if (!goal) {
+		return res
+			.status(404)
+			.json(errorResponse("Goal not found" ));
+	}
+
+	return res
+		.status(200)
+		.json(successResponse("Goals fetched successfully", goal));
+};
+
+const isGoalCompleted = async (req: Request, res: Response) => {
+	const userId = req.user._id;
+	const { goalId } = req.params;
+
+	const goal = await Goal.findOne({ userId, _id: goalId });
+};
+
+export { createGoal, getGoal };

@@ -13,4 +13,5 @@ export const conf = {
 	backendUrl: String(process.env.BACKEND_URI),
 	verificationSecret: String(process.env.VERIFY_SECRET),
 	accessTokenSecret: String(process.env.ACCESS_SECRET),
+	geminiKey: String(process.env.GEMINI_API_KEY),
 };
