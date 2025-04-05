@@ -14,6 +14,6 @@ router.get("/verifyemail/:id", verifyEmail);
 router.post("/register", registerUser);
 router.post("/login", login);
 router.get("/logout", authMiddleware, logout);
-router.get("/deletsuser", authMiddleware, deleteAccount);
+router.get("/deleteuser", authMiddleware, deleteAccount);
 
 export default router;
