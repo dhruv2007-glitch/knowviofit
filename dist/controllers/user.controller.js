@@ -7,6 +7,7 @@ import { sendMail } from "../helpers/sendMail.js";
 import { conf } from "../config/conf.js";
 import logger from "../utils/logger.js";
 import jwt from "jsonwebtoken";
+import { delCache } from "../cache/cache.js";
 const registerUser = async (req, res) => {
     const result = signUpSchema.safeParse(req.body);
     if (!result.success) {
@@ -139,6 +140,7 @@ const deleteAccount = async (req, res) => {
             .clearCookie("accessToken")
             .json(successResponse("User logged out successfully"));
     }
+    delCache(user.email);
     return res
         .status(200)
         .clearCookie("accessToken")

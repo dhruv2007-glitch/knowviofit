@@ -51,20 +51,20 @@ const editProfile = async (req, res) => {
     res.status(200).json(successResponse("Profile edited successfully"));
 };
 const getProfile = async (req, res) => {
-    const userId = req?.user._id;
-    await Profile.findOne({ userId })
-        .then((profile) => {
+    try {
+        const userId = req?.user?._id;
+        if (!userId) {
+            return res.status(401).json(new AppError("Unauthorized", 401));
+        }
+        const profile = await Profile.findOne({ userId });
         if (!profile) {
             return res.status(404).json(new AppError("Profile not found", 404));
         }
-        res
-            .status(200)
-            .json(successResponse("Profile fetched successfully", profile));
-    })
-        .catch((err) => {
-        const error = err;
-        logger.error(error.message);
-        return res.status(500).json(new AppError(error.message, 500));
-    });
+        res.status(200).json(successResponse("Profile fetched successfully", profile));
+    }
+    catch (error) {
+        logger.error("Error fetching profile:", error);
+        res.status(500).json(new AppError("Internal Server Error", 500));
+    }
 };
 export { createProfile, editProfile, getProfile };

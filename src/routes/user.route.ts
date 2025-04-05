@@ -12,7 +12,11 @@ import {
 } from "../controllers/profile.controller";
 import express from "express";
 import { authMiddleware } from "../middleware/auth.middleware";
-import { createGoal, getGoal, completeGoal } from "../controllers/goal.controller";
+import {
+	createGoal,
+	getGoal,
+	completeGoal,
+} from "../controllers/goal.controller";
 import { asyncHandler } from "../utils/asyncHandler";
 import {
 	createActivity,
@@ -38,7 +42,11 @@ router.get("/getProfile", authMiddleware, asyncHandler(getProfile));
 // Goal Routes
 router.post("/createGoal", authMiddleware, asyncHandler(createGoal));
 router.get("/getGoal", authMiddleware, asyncHandler(getGoal));
-router.post("/completeGoal/:goalId", authMiddleware, asyncHandler(completeGoal));
+router.post(
+	"/completeGoal/:goalId",
+	authMiddleware,
+	asyncHandler(completeGoal),
+);
 
 // Activity Routes
 router.post("/createActivity", authMiddleware, asyncHandler(createActivity));

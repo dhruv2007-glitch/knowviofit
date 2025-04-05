@@ -25,7 +25,7 @@ export const sendMail = async (
 			text: `Hi ${name}, your Verificatin link is here. It's valid for 3 minutes.`,
 			html: template,
 		});
-		console.log("mail sent", info);
+		// console.log("mail sent", info);
 		return info;
 	} catch (error: unknown) {
 		const err = error as Error;

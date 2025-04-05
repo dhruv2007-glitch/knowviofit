@@ -2,7 +2,7 @@ import { registerUser, verifyEmail, login, logout, deleteAccount, } from "../con
 import { createProfile, editProfile, getProfile, } from "../controllers/profile.controller.js";
 import express from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
-import { createGoal, getGoal, completeGoal } from "../controllers/goal.controller.js";
+import { createGoal, getGoal, completeGoal, } from "../controllers/goal.controller.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { createActivity, getActivities, } from "../controllers/acivity.controller.js";
 import { getAiInsights } from "../controllers/aiInsights.controller.js";

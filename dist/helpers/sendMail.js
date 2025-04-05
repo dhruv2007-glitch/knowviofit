@@ -19,7 +19,7 @@ export const sendMail = async (name, mailId, verificationLink) => {
             text: `Hi ${name}, your Verificatin link is here. It's valid for 3 minutes.`,
             html: template,
         });
-        console.log("mail sent", info);
+        // console.log("mail sent", info);
         return info;
     }
     catch (error) {

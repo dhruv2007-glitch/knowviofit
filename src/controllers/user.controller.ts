@@ -1,7 +1,6 @@
 import type { CookieOptions, Request, Response } from "express";
 import { User } from "../models/user.model";
 import { loginSchema, signUpSchema, verificationShema } from "../schemas/auth";
-import { asyncHandler } from "../utils/asyncHandler";
 import { errorResponse, successResponse } from "../utils/Response";
 import { AppError } from "../utils/ApiError";
 import { nanoid } from "nanoid";
@@ -11,6 +10,7 @@ import logger from "../utils/logger";
 import type { IUser } from "../interfaces/models";
 import type { JwtPayload } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
+import { delCache } from "../cache/cache";
 
 const registerUser = async (req: Request, res: Response) => {
 	const result = signUpSchema.safeParse(req.body);
@@ -183,6 +183,7 @@ const deleteAccount = async (req: Request, res: Response) => {
 			.clearCookie("accessToken")
 			.json(successResponse("User logged out successfully"));
 	}
+	delCache(user.email);
 
 	return res
 		.status(200)
